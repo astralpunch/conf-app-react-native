@@ -4,7 +4,6 @@ import Card from '../common/Card';
 
 class EventCard extends Component {
   render() {
-    console.log(this.props.event);
     return (
       <Card>
         <Image source={{ uri: 'https://picsum.photos/100/50/?random' }} style={styles.image} />

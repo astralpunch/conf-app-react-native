@@ -9,6 +9,7 @@ import {
   SectionList,
   TouchableHighlight,
   Modal,
+  TouchableOpacity,
 } from 'react-native';
 import { eventList } from '../../fixtures';
 
@@ -19,23 +20,11 @@ class EventList extends Component {
     events: eventList,
   };
 
-  state = {
-    deleteModalOpen: false,
-  };
-
   render() {
     return (
       <View>
-        <Modal animationType="slide" transparent={false} visible={this.state.deleteModalOpen}>
-          <View style={{ marginTop: 22 }}>
-            <View>
-              <Text>Delete event?</Text>
-              <Button title="Close" onPress={this.toggleDeleteModal} />
-            </View>
-          </View>
-        </Modal>
         <SectionList
-          renderItem={this.getItem}
+          renderItem={this.renderItem}
           renderSectionHeader={this.getSectionHeader}
           sections={this.getEventListSectionsData()}
           keyExtractor={(item, index) => item + index}
@@ -58,15 +47,13 @@ class EventList extends Component {
     return sections;
   };
 
-  toggleDeleteModal = () => {
-    this.setState(prevState => ({
-      deleteModalOpen: !prevState.deleteModalOpen,
-    }));
-  };
-
   getSectionHeader = ({ section }) => <Text style={styles.header}>{section.title}</Text>;
 
-  getItem = ({ item }) => <EventCard openModal={} event={item.event} />;
+  renderItem = ({ item }) => (
+    <TouchableOpacity onPress={this.props.onEventPress(item.key)}>
+      <EventCard event={item.event} />
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
