@@ -11,29 +11,24 @@ import {
   Modal,
   TouchableOpacity,
 } from 'react-native';
-import { eventList } from '../../fixtures';
 
 import EventCard from './EventCard';
 
 class EventList extends Component {
-  static defaultProps = {
-    events: eventList,
-  };
-
   render() {
     return (
       <View>
         <SectionList
           renderItem={this.renderItem}
           renderSectionHeader={this.getSectionHeader}
-          sections={this.getEventListSectionsData()}
+          sections={this.getEventsListSectionsData()}
           keyExtractor={(item, index) => item + index}
         />
       </View>
     );
   }
 
-  getEventListSectionsData = () => {
+  getEventsListSectionsData = () => {
     const groupEvents = groupBy(this.props.events, event => event.title.charAt(0));
 
     const sections = Object.entries(groupEvents).map(([letter, events]) => ({
